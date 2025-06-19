@@ -1,0 +1,41 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h2 style="margin: 0;">Transaction List</h2>
+  <button (click)="navigateToAdd()"
+          style="padding: 8px 16px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+    Add Transaction
+  </button>
+</div>
+
+<input
+  type="text"
+  [(ngModel)]="searchQuery"
+  placeholder="Search transactions..."
+  style="margin-bottom: 20px; padding: 8px; width: 300px;"
+/>
+
+<!-- Transaction Table -->
+<table border="1" cellpadding="10">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Bank Account</th>
+      <th>Payment Method</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of filteredTransactions()">
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.bankAccount }}</td>
+      <td>{{ transaction.paymentMethod }}</td>
+      <td>{{ transaction.description }}</td>
+      <td>
+        <button (click)="updateTransaction(transaction.id!)">Update</button>
+        <button (click)="deleteTransaction(transaction.id!)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

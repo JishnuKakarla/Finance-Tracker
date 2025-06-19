@@ -1,0 +1,62 @@
+name: Full Stack CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Finance-Frontend/**'
+      - 'Finanace-Backend/**'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # ------------ Backend (Spring Boot) ------------
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Spring Boot App
+        working-directory: ./Finanace-Backend
+        run: ./mvnw clean install -DskipTests
+
+      - name: Run Backend Server (optional)
+        working-directory: ./Finanace-Backend
+        run: |
+          nohup ./mvnw spring-boot:run &
+
+      # ------------ Frontend (Angular) ------------
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Angular dependencies
+        working-directory: ./Finance-Frontend
+        run: npm install
+
+      - name: Build Angular App
+        working-directory: ./Finance-Frontend
+        run: npm run build -- --output-path=dist
+
+      # --------- Deployment logic (you can customize) ---------
+      # Example: Rsync to EC2 or FTP to a server
+      # - name: Deploy to Server
+      #   run: |
+      #     scp -r ./Finance-Frontend/dist/* user@your-server:/var/www/html/
+      #     scp ./Finanace-Backend/target/*.jar user@your-server:/home/your-user/
