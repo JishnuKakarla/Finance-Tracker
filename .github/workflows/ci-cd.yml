@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'Finance-Frontend/**'
-      - 'Finanace-Backend/**'
+      - 'Finance-Backend/**'
   pull_request:
     branches: [ main ]
 
@@ -32,11 +32,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Spring Boot App
-        working-directory: ./Finanace-Backend
+        working-directory: ./Finance-Backend
         run: ./mvnw clean install -DskipTests
 
       - name: Run Backend Server (optional)
-        working-directory: ./Finanace-Backend
+        working-directory: ./Finance-Backend
         run: |
           nohup ./mvnw spring-boot:run &
 
@@ -59,4 +59,4 @@ jobs:
       # - name: Deploy to Server
       #   run: |
       #     scp -r ./Finance-Frontend/dist/* user@your-server:/var/www/html/
-      #     scp ./Finanace-Backend/target/*.jar user@your-server:/home/your-user/
+      #     scp ./Finance-Backend/target/*.jar user@your-server:/home/your-user/
