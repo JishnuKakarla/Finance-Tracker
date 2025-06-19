@@ -8,6 +8,7 @@ on:
       - 'Finance-Backend/**'
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -31,6 +32,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Ensure mvnw is executable
+        working-directory: ./Finance-Backend
+        run: chmod +x mvnw
+
       - name: Build Spring Boot App
         working-directory: ./Finance-Backend
         run: ./mvnw clean install -DskipTests
@@ -52,10 +57,9 @@ jobs:
 
       - name: Build Angular App
         working-directory: ./Finance-Frontend
-        run: npm run build -- --output-path=dist
+        run: npm run build
 
-      # --------- Deployment logic (you can customize) ---------
-      # Example: Rsync to EC2 or FTP to a server
+      # --------- Deployment logic (optional) ---------
       # - name: Deploy to Server
       #   run: |
       #     scp -r ./Finance-Frontend/dist/* user@your-server:/var/www/html/
