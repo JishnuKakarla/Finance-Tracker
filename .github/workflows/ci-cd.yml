@@ -2,12 +2,12 @@ name: Full Stack CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'Finance-Frontend/**'
       - 'Finance-Backend/**'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
