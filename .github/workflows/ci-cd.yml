@@ -2,12 +2,13 @@ name: Full Stack CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'Finance-Frontend/**'
-      - 'Finanace-Backend/**'
+      - 'Finance-Backend/**'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -31,12 +32,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Ensure mvnw is executable
+        working-directory: ./Finance-Backend
+        run: chmod +x mvnw
+
       - name: Build Spring Boot App
-        working-directory: ./Finanace-Backend
+        working-directory: ./Finance-Backend
         run: ./mvnw clean install -DskipTests
 
       - name: Run Backend Server (optional)
-        working-directory: ./Finanace-Backend
+        working-directory: ./Finance-Backend
         run: |
           nohup ./mvnw spring-boot:run &
 
@@ -52,11 +57,10 @@ jobs:
 
       - name: Build Angular App
         working-directory: ./Finance-Frontend
-        run: npm run build -- --output-path=dist
+        run: npm run build
 
-      # --------- Deployment logic (you can customize) ---------
-      # Example: Rsync to EC2 or FTP to a server
+      # --------- Deployment logic (optional) ---------
       # - name: Deploy to Server
       #   run: |
       #     scp -r ./Finance-Frontend/dist/* user@your-server:/var/www/html/
-      #     scp ./Finanace-Backend/target/*.jar user@your-server:/home/your-user/
+      #     scp ./Finance-Backend/target/*.jar user@your-server:/home/your-user/
