@@ -9,7 +9,33 @@ phases:
       - echo Installing backend and frontend...
       - cd Finance-Backend
       - chmod +x mvnw
-      - ./mvnw clean install -DskipTests
+      - ./mvnw clean install -DskipTestsversion: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing Angular CLI..."
+      - npm install -g @angular/cli
+      - cd Finance-Frontend
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Building Angular App..."
+      - npm run build -- --output-path=../build/frontend
+      - cd ../Finanace-Backend
+      - echo "Building Spring Boot App..."
+      - chmod +x mvnw
+      - ./mvnw clean package -DskipTests
+artifacts:
+  files:
+    - build/**
+    - Finanace-Backend/target/*.jar
+    - appspec.yml
+    - scripts/**
+
       - cd ../Finance-Frontend
       - npm install
 
