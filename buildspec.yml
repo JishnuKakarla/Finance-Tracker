@@ -42,8 +42,14 @@ artifacts:
   build:
     commands:
       - echo Building Angular app...
+      - cd Finance-Frontend
+      - npm install
       - npm run build -- --output-path=../build/frontend
-      - cp ../Finance-Backend/target/*.jar ../build/backend/app.jar
+      - cd ..
+      - echo Building Spring Boot app...
+      - cd Finance-Backend
+      - ./mvnw clean install -DskipTests
+      - cp target/*.jar ../build/backend/app.jar
 
 artifacts:
   files:
