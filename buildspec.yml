@@ -7,7 +7,6 @@ phases:
       java: corretto17
     commands:
       - echo "n is already installed, skipping install"
-      - echo "Installing Node.js 20.19.0..."
       - n 20.19.0
       - export PATH="/usr/local/n/versions/node/20.19.0/bin:$PATH"
       - node -v
@@ -17,18 +16,22 @@ phases:
 
   pre_build:
     commands:
+      - echo "Installing backend dependencies..."
       - cd Finance-Backend
       - chmod +x mvnw
       - ./mvnw clean install -DskipTests
       - cd ../Finance-Frontend
+      - echo "Installing frontend dependencies..."
       - npm install
       - cd ..
 
   build:
     commands:
+      - echo "Building Angular app..."
       - cd Finance-Frontend
       - npm run build -- --output-path=../build/frontend
       - cd ../Finance-Backend
+      - echo "Building Spring Boot app..."
       - ./mvnw clean package -DskipTests
       - mkdir -p ../build/backend
       - cp target/*.jar ../build/backend/app.jar
@@ -36,12 +39,16 @@ phases:
 
   post_build:
     commands:
+      - echo "Copying appspec.yml and scripts to build directory..."
+      - cp ../appspec.yml build/
+      - cp -r ../scripts build/
+      - echo "Build completed successfully."
       - ls -R build
 
 artifacts:
   files:
     - frontend/**
     - backend/app.jar
-    - ../appspec.yml
-    - ../scripts/**
+    - appspec.yml
+    - scripts/**
   base-directory: build
