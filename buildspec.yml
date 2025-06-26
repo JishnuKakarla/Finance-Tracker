@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 20
       java: corretto17
-     commands:
+    commands:
       - echo "n is already installed, skipping install"
       - echo "Installing Node.js 20.19.0..."
       - n 20.19.0
