@@ -3,13 +3,15 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing Node.js 20.x on Amazon Linux..."
-      - curl -sL https://rpm.nodesource.com/setup_20.x | bash -
-      - yum install -y nodejs
+      - echo "Updating package lists..."
+      - apt-get update -y
+      - echo "Installing Node.js 20.x..."
+      - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+      - apt-get install -y nodejs
       - node -v
       - npm -v
-      - echo "Installing Java 17 (Corretto)..."
-      - yum install -y java-17-amazon-corretto-devel
+      - echo "Installing Java 17 (OpenJDK)..."
+      - apt-get install -y openjdk-17-jdk
       - java -version
       - echo "Installing Angular CLI globally..."
       - npm install -g @angular/cli
