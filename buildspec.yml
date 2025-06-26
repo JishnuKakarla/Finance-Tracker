@@ -42,6 +42,6 @@ artifacts:
   files:
     - frontend/**
     - backend/app.jar
-    - appspec.yml
-    - scripts/**
+    - ../appspec.yml
+    - ../scripts/**
   base-directory: build
