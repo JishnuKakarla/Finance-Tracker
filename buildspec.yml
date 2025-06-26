@@ -5,9 +5,8 @@ phases:
     runtime-versions:
       nodejs: 20
       java: corretto17
-    commands:
-      - echo "Installing n (Node version manager)..."
-      - npm install -g n
+     commands:
+      - echo "n is already installed, skipping install"
       - echo "Installing Node.js 20.19.0..."
       - n 20.19.0
       - export PATH="/usr/local/n/versions/node/20.19.0/bin:$PATH"
