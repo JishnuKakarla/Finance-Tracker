@@ -3,10 +3,17 @@ os: linux
 files:
   - source: ./frontend
     destination: /home/ubuntu/frontend
+    overwrite: true
   - source: ./backend/app.jar
     destination: /home/ubuntu/backend
+    overwrite: true
 
 hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: ubuntu
+
   AfterInstall:
     - location: scripts/after_install.sh
       timeout: 300
