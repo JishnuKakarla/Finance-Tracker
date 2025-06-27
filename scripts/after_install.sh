@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "Running after_install"
 cd /home/ubuntu/frontend
-npm install -g serve
+/usr/local/bin/npm install -g serve
