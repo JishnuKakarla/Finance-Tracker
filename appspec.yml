@@ -7,6 +7,9 @@ files:
   - source: ./backend/app.jar
     destination: /home/ubuntu/backend
     overwrite: true
+  - source: ./app.service
+    destination: /home/ubuntu
+    overwrite: true
 
 hooks:
   BeforeInstall:
