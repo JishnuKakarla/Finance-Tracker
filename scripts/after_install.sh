@@ -19,4 +19,9 @@ npm install -g serve
 
 npm install
 
+# Copy the systemd service file and reload systemd
+sudo cp /home/ubuntu/scripts/app.service /etc/systemd/system/app.service
+sudo systemctl daemon-reload
+sudo systemctl enable app
+
 echo "after_install completed"
