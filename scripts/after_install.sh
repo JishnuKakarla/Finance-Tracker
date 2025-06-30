@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/bin/bashMore actions
 echo "Running after_install"
 
 # Install Node.js and npm if not present
@@ -12,13 +11,12 @@ fi
 # Install PM2 globally
 sudo npm install -g pm2
 
-# Install a compatible version of 'serve' globally
-sudo npm install -g serve@13.0.2
-
-sudo chown -R ubuntu:ubuntu /home/ubuntu/frontend
-
 # Install frontend dependencies
-cd /home/ubuntu/frontend || exit 1
+cd /home/ubuntu/frontend
+
+# Install 'serve' globally using npm
+npm install -g serve
+
 npm install
 
 # Copy the systemd service file and reload systemd
