@@ -15,6 +15,8 @@ sudo npm install -g pm2
 # Install a compatible version of 'serve' globally
 sudo npm install -g serve@13.0.2
 
+sudo chown -R ubuntu:ubuntu /home/ubuntu/frontend
+
 # Install frontend dependencies
 cd /home/ubuntu/frontend || exit 1
 npm install
